@@ -33,6 +33,7 @@ jobs:
 
   deploy:
     name: Deploy to production
+    runs-on: ubuntu-latest
     #  is used to specify that the deploy job should only run after
     # the test job has completed successfully
     needs: test
