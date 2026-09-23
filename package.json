@@ -5,7 +5,8 @@
 
   "scripts": {
     "test": "jest --coverage",
-    "dev": "node index.js"
+    "dev": "node index.js",
+    "build": "node index.js"
   },
   "keywords": [],
   "author": "",

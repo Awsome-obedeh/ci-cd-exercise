@@ -18,4 +18,43 @@ jobs:
       
       - run: npm test
 
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20
+    - run: npm install
+    - run: npm run build
+
+  deploy:
+    name: Deploy to production
+    #  is used to specify that the deploy job should only run after
+    # the test job has completed successfully
+    needs: test
+
+    steps:
+      - name: Deploy Application to aws Ec2
+      - uses: appleboy/ssh-action@v1
+        with:
+          # we do not hard code server details
+          host: ${{ secrets.EC2_HOST }} 
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_KEY }}
+          
+          script: |
+            cd /var/www/myapp
+            git pull origin main
+            npm ci
+            npm run build 
+            pm2 restart myapp
+            echo "Deployment completed successfully!"
+
+
+
+
 
