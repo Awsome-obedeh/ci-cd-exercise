@@ -39,7 +39,7 @@ jobs:
     needs: test
 
     steps:
-      - name: Deploy Application to aws Ec2
+      
       - uses: appleboy/ssh-action@v1
         with:
           # we do not hard code server details
